@@ -1,4 +1,3 @@
-
 import frappe
 
 
@@ -48,21 +47,23 @@ def login(username: str, password: str):
 	except frappe.AuthenticationError:
 		frappe.throw("Authentication error")
 
+
 @frappe.whitelist(allow_guest=True)
 def get_contributor_profile(contributor_id: str):
-    try:
-        # Fetch a specific contributor profile based on ID
-        contributor = frappe.get_all("Contributor", 
-            filters={"name": contributor_id},
-            fields=["about", "contributor", "linkedin", "github", "resume"]
-        )
-        if not contributor:
-            return {"status": "error", "message": "Contributor not found"}
-        
-        return {"status": "success", "data": contributor}
-    except Exception as e:
-        frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
-        return {"status": "error", "message": str(e)}
+	try:
+		# Fetch a specific contributor profile based on ID
+		contributor = frappe.get_all(
+			"Contributor",
+			filters={"name": contributor_id},
+			fields=["about", "contributor", "linkedin", "github", "resume"],
+		)
+		if not contributor:
+			return {"status": "error", "message": "Contributor not found"}
+
+		return {"status": "success", "data": contributor}
+	except Exception as e:
+		frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
+		return {"status": "error", "message": str(e)}
 
 
 @frappe.whitelist()
@@ -76,7 +77,7 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 			contributor_details_doc = frappe.get_doc(
 				{
 					"doctype": "Contributor",
-					"organization": contributor.get("name"),
+					"contributor": contributor.get("name"),
 					"about": about,
 					"domain": domain,
 					"technologies": technologies,

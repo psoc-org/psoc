@@ -59,7 +59,7 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 			mentor_details_doc = frappe.get_doc(
 				{
 					"doctype": "Mentor",
-					"organization": mentor.get("name"),
+					"mentor": mentor.get("name"),
 					"about": about,
 					"domain": domain,
 					"technologies": technologies,

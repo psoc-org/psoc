@@ -10,7 +10,7 @@ def register_and_login(organization_name: str, organization_id: str, organizatio
 		organization_doc = frappe.get_doc(
 			{
 				"doctype": "User",
-				"username": organization_name,
+				"username": organization_id,
 				"email": organization_email,
 				"full_name": organization_name,
 				"first_name": organization_name,
