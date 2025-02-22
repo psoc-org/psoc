@@ -48,10 +48,10 @@
             :class="inputClass"
           />
         </div>
-        
+
         <div class="flex justify-between text-sm mt-2">
           <router-link to="/forgot-password" class="hover:underline" :class="linkClass">Forgot Password?</router-link>
-          <router-link to="/createaccount" class="hover:underline" :class="linkClass">Create a New Account</router-link>
+          <router-link to="/#apply" class="hover:underline" :class="linkClass">Create a New Account</router-link>
         </div>
         
         <button 
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+
+import { session } from '@/data/session' // ✅ Import session to use `isLoggedIn`
 export default {
   data() {
     return {

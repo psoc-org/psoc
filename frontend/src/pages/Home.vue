@@ -7,6 +7,8 @@
 
       <!-- Center-aligned Navigation Links -->
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
+        <router-link v-if="!isLoggedIn" to="/login" :class="linkClass" class="font-medium hover:opacity-75">Login</router-link>
+        <router-link v-else to="/" :class="linkClass" class="font-medium hover:opacity-75">Profile</router-link>
         <router-link to="/about" :class="linkClass" class="font-medium hover:opacity-75">About</router-link>
         <router-link to="/vieworganizations" :class="linkClass" class="font-medium hover:opacity-75">View Organizations</router-link>
         <router-link to="/viewprojects" :class="linkClass" class="font-medium hover:opacity-75">View Projects</router-link>
@@ -90,7 +92,7 @@
 
     <!-- Call to Action -->
     <section id="apply" class="text-center py-16 mx-6 rounded-2xl shadow-sm" :class="themeClass">
-      <h3 class="text-[2rem] font-bold">Start Your Open-Source Journey</h3>
+      <h3 class="text-[2rem] font-bold">Start Your Open-Source Journey, Create a New Account.</h3>
       <p class="text-lg mt-4">Join PSoC in a role that suits you best - as a Contributor, Mentor, or Organizer.</p>
 
       <div class="grid md:grid-cols-3 gap-10 text-left w-full py-20 px-12">
@@ -210,7 +212,7 @@ export default {
       localStorage.setItem("theme", this.theme);
     },
     navigateToCreateAccount(userType) {
-      this.$router.push({ path: "/createaccount", query: { type: userType } });
+      this.$router.push({ path: "/signup", query: { type: userType } });
     }
   },
   created() {
