@@ -15,6 +15,11 @@ class Organization(Document):
 		from frappe.types import DF
 
 		about: DF.Data | None
-		org_id: DF.Link
+		domain: DF.Data | None
+		github: DF.Data | None
+		linkedin: DF.Data | None
+		organization: DF.Link
 		tagline: DF.Data | None
+		technologies: DF.Data | None
+		website: DF.Data | None
 	# end: auto-generated types

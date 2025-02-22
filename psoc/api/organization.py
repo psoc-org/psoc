@@ -48,8 +48,33 @@ def login(organization_id: str, password: str):
 
 
 @frappe.whitelist()
-def submit_details(tagline: str, about: str):
-	pass
+def submit_details(
+	tagline: str, about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str
+):
+	organization = frappe.session.user
+	roles = frappe.get_roles(organization)
+	allowed = False
+	for role in roles:
+		if role == "Organization":
+			organization = frappe.db.get_value("User", {"username": organization}, "name")
+			organization_details_doc = frappe.get_doc(
+				{
+					"doctype": "Organization",
+					"organization": organization.get("name"),
+					"tagline": tagline,
+					"about": about,
+					"domain": domain,
+					"technologies": technologies,
+					"website": website_url,
+					"linkedin": linkedin,
+					"github": github,
+				}
+			)
+			organization_details_doc.insert()
+			organization_details_doc.add_roles("Organization")
+			allowed = True
+	if not allowed:
+		frappe.throw("Cannot submit details. Please login.")
 
 
 @frappe.whitelist()

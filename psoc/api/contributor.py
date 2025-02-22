@@ -66,8 +66,30 @@ def get_contributor_profile(contributor_id: str):
 
 
 @frappe.whitelist()
-def submit_details(tagline: str, about: str):
-	pass
+def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
+	contributor = frappe.session.user
+	roles = frappe.get_roles(contributor)
+	allowed = False
+	for role in roles:
+		if role == "Contributor":
+			contributor = frappe.db.get_value("User", {"username": contributor}, "name")
+			contributor_details_doc = frappe.get_doc(
+				{
+					"doctype": "Contributor",
+					"organization": contributor.get("name"),
+					"about": about,
+					"domain": domain,
+					"technologies": technologies,
+					"website": website_url,
+					"linkedin": linkedin,
+					"github": github,
+				}
+			)
+			contributor_details_doc.insert()
+			contributor_details_doc.add_roles("Contributor")
+			allowed = True
+	if not allowed:
+		frappe.throw("Cannot submit details. Please login.")
 
 
 @frappe.whitelist()
