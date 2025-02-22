@@ -1,20 +1,7 @@
 <template>
-	<div :class="themeClass" class="min-h-screen bg-[#03001C] flex flex-col items-center p-10">
-		<nav
-			:class="navClass"
-			class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow"
-		>
-			<router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
-
-			<!-- Theme Toggle Button -->
-			<button
-				@click="toggleTheme"
-				:class="buttonClass"
-				class="px-4 py-2 rounded-lg transition"
-			>
-				{{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-			</button>
-		</nav>
+	<div :class="themeClass" class="min-h-screen flex flex-col transition-colors duration-300">
+		<Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
+		<div class="flex-grow flex items-center justify-center">
 		<div
 			:class="themeClass"
 			class="min-h-screen flex flex-col items-center p-10 transition-colors duration-300"
@@ -70,12 +57,15 @@
 			</div>
 		</div>
 	</div>
+	<Footer :theme="theme" />
+	</div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 const router = useRouter()
 const theme = ref(localStorage.getItem('theme') || 'light')
 

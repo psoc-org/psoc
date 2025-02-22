@@ -6,10 +6,12 @@
  "engine": "InnoDB",
  "field_order": [
   "mentor",
-  "about_me",
+  "about",
   "linkedin",
   "github",
-  "resume"
+  "website",
+  "technologies",
+  "domain"
  ],
  "fields": [
   {
@@ -18,13 +20,6 @@
    "in_list_view": 1,
    "label": "Mentor",
    "options": "User",
-   "reqd": 1
-  },
-  {
-   "fieldname": "about_me",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "About Me",
    "reqd": 1
   },
   {
@@ -42,16 +37,34 @@
    "reqd": 1
   },
   {
-   "fieldname": "resume",
-   "fieldtype": "Attach",
-   "label": "Resume",
+   "fieldname": "about",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "About Me",
+   "reqd": 1
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  },
+  {
+   "fieldname": "technologies",
+   "fieldtype": "Data",
+   "label": "Technologies",
+   "reqd": 1
+  },
+  {
+   "fieldname": "domain",
+   "fieldtype": "Data",
+   "label": "Domain",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-22 16:10:20.680813",
+ "modified": "2025-02-22 21:44:20.551814",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Mentor",

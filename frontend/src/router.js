@@ -32,7 +32,7 @@ const routes = [
   {
     name: "Organisation Creation",
     path:'/organisation/signup',
-    component:()=>import('@/pages/OrganisationCreation.vue')
+    component:()=>import('@/pages/OrganizationCreation.vue')
   },
   {
     name: "Proposal Details",
@@ -82,7 +82,7 @@ const routes = [
   {
     name:"Organisation Approval",
     path:"/organisation/approval",
-    component:()=>import('@/pages/OrganisationList.vue')
+    component:()=>import('@/pages/OrganizationList.vue')
   },
   {
     name:"Project Approval",

@@ -1,4 +1,3 @@
-
 import frappe
 
 
@@ -48,26 +47,50 @@ def login(username: str, password: str):
 	except frappe.AuthenticationError:
 		frappe.throw("Authentication error")
 
+
 @frappe.whitelist(allow_guest=True)
 def get_contributor_profile(contributor_id: str):
-    try:
-        # Fetch a specific contributor profile based on ID
-        contributor = frappe.get_all("Contributor", 
-            filters={"name": contributor_id},
-            fields=["about", "contributor", "linkedin", "github", "resume"]
-        )
-        if not contributor:
-            return {"status": "error", "message": "Contributor not found"}
-        
-        return {"status": "success", "data": contributor}
-    except Exception as e:
-        frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
-        return {"status": "error", "message": str(e)}
+	try:
+		# Fetch a specific contributor profile based on ID
+		contributor = frappe.get_all(
+			"Contributor",
+			filters={"name": contributor_id},
+			fields=["about", "contributor", "linkedin", "github", "resume"],
+		)
+		if not contributor:
+			return {"status": "error", "message": "Contributor not found"}
+
+		return {"status": "success", "data": contributor}
+	except Exception as e:
+		frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
+		return {"status": "error", "message": str(e)}
 
 
 @frappe.whitelist()
-def submit_details(tagline: str, about: str):
-	pass
+def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
+	contributor = frappe.session.user
+	roles = frappe.get_roles(contributor)
+	allowed = False
+	for role in roles:
+		if role == "Contributor":
+			contributor = frappe.db.get_value("User", {"username": contributor}, "name")
+			contributor_details_doc = frappe.get_doc(
+				{
+					"doctype": "Contributor",
+					"contributor": contributor.get("name"),
+					"about": about,
+					"domain": domain,
+					"technologies": technologies,
+					"website": website_url,
+					"linkedin": linkedin,
+					"github": github,
+				}
+			)
+			contributor_details_doc.insert()
+			contributor_details_doc.add_roles("Contributor")
+			allowed = True
+	if not allowed:
+		frappe.throw("Cannot submit details. Please login.")
 
 
 @frappe.whitelist()

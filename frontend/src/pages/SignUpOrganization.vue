@@ -103,12 +103,11 @@
 export default {
 	data() {
 		return {
-			theme: "light",
+			theme: 'light',
 			step: 1,
 			firstPartData: {
 				organizationName: '',
 				organizationId: '',
-				username: '',
 				email: '',
 				password: '',
 				confirmPassword: '',
@@ -135,7 +134,6 @@ export default {
 					type: 'text',
 					model: 'organizationId',
 				},
-				{ id: 'username', label: 'Username', type: 'text', model: 'username' },
 				{ id: 'email', label: 'Email', type: 'email', model: 'email' },
 				{ id: 'password', label: 'Password', type: 'password', model: 'password' },
 				{
@@ -197,9 +195,43 @@ export default {
 		},
 	},
 	methods: {
-		async signUp() {
+		async signUpAndDetails() {
 			const signUpData = this.firstPartData
-			console.log('Sign up data:', signUpData)
+			const signUpResource = createResource({
+				url: 'psoc.api.contributor.register_and_login',
+				makeParams() {
+					return {
+						organization_id: signUpData.organizationId,
+						organization_name: signUpData.organizationName,
+						email: signUpData.email,
+						password: signUpData.password,
+					}
+				},
+				onSuccess() {
+					console.log('Login successful')
+				},
+			})
+			signUpResource.submit()
+
+			const submissionDetailsData = this.secondPartData
+			const submissionDetailsResource = createResource({
+				url: 'psoc.api.organization.submit_details',
+				makeParams() {
+					return {
+						about: submissionDetailsData.about,
+						tagline: submissionDetailsData.tagline,
+						domain: submissionDetailsData.domain,
+						technologies: submissionDetailsData.technologies,
+						website: submissionDetailsData.website_url,
+						linkedin: submissionDetailsData.linkedin,
+						github: submissionDetailsData.github,
+					}
+				},
+				onSuccess() {
+					console.log('Detail submission successful')
+				},
+			})
+			submissionDetailsResource.submit()
 		},
 		handleNextStep() {
 			if (this.step === 1) {
