@@ -4,36 +4,38 @@
     <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
 
     <!-- Page Header -->
-    <header class="text-center py-28 mt-16">
-      <h2 class="text-4xl font-bold">View Organizations</h2>
-      <p class="text-lg mt-2">Explore organizations participating in PSoC</p>
+    <header :class="cardClass" class="text-center py-10 mt-16">
+      <h2 class="text-[2rem] font-bold">View Organizations</h2>
+      <p class="text-lg mt-3">Explore organizations participating in PSoC</p>
     </header>
 
     <!-- Filters Section -->
-    <section :class="dropClass" class="p-6 flex flex-wrap gap-4 justify-center">
-      <input v-model="searchQuery" type="text" placeholder="Search by name" class="p-2 border rounded-md" />
+    <section :class="dropClass, cardClass" class="p-8 flex flex-wrap gap-6 justify-center rounded-xl shadow-md mx-12 my-12">
+      <input v-model="searchQuery" type="text" placeholder="Search by organization name" class="p-2 border rounded-md" />
       <select v-model="selectedDomain" class="p-2 border rounded-md">
         <option value="">All Domains</option>
         <option v-for="domain in uniqueDomains" :key="domain" :value="domain">{{ domain }}</option>
       </select>
-      <input v-model.number="minProjects" type="number" placeholder="Min Projects" class="p-2 border rounded-md" />
-      <input v-model.number="minYears" type="number" placeholder="Min Years" class="p-2 border rounded-md" />
+      <input v-model.number="minProjects" type="number" placeholder="Min. no. of Projects" class="p-2 border rounded-md" />
+      <input v-model.number="minYears" type="number" placeholder="Min. no. of Years" class="p-2 border rounded-md" />
     </section>
 
     <!-- Organizations Grid -->
-    <section class="grid md:grid-cols-3 gap-6 px-12">
-      <div v-for="org in filteredOrganizations" :key="org.id" class="p-6 rounded-lg shadow-md hover:shadow-lg transition" :class="cardClass">
-        <h3 class="text-2xl font-semibold">{{ org.name }}</h3>
-        <p class="text-sm mt-1"><b>Domain:</b> {{ org.domain }}</p>
-        <p class="text-sm"><b>About:</b> {{ org.about }}</p>
-        <p class="text-sm"><b>Projects:</b> {{ org.projects }}</p>
-        <p class="text-sm"><b>Years in PSoC:</b> {{ org.years }}</p>
-        <div class="mt-4 flex space-x-3">
+    <section class="grid md:grid-cols-3 gap-8 px-12">
+      <div v-for="org in filteredOrganizations" :key="org.id" 
+      class="p-6 rounded-lg shadow-md hover:shadow-lg transition space-y-4"
+      :class="cardClass">
+        <h3 class="text-3xl font-bold">{{ org.name }}</h3>
+        <p class="text-lg mt-2"><b>Domain:</b> {{ org.domain }}</p>
+        <p class="text-lg mt-2"><b>About:</b> {{ org.about }}</p>
+        <p class="text-lg mt-2"><b>Projects:</b> {{ org.projects }}</p>
+        <p class="text-lg mt-2"><b>Years in PSoC:</b> {{ org.years }}</p>
+        <div class="mt-5 flex space-x-4">
           <a v-if="org.website" :href="org.website" target="_blank" class="text-blue-500 hover:underline">Website</a>
           <a v-if="org.github" :href="org.github" target="_blank" class="text-blue-500 hover:underline">GitHub</a>
           <a v-if="org.linkedin" :href="org.linkedin" target="_blank" class="text-blue-500 hover:underline">LinkedIn</a>
         </div>
-        <router-link :to="`/viewprojects?org=${org.id}`">
+        <router-link :to="`/viewprojects?org=${org.name}`">
           <button class="mt-4 px-5 py-2 rounded-lg shadow transition" :class="buttonClass">View Projects</button>
         </router-link>
       </div>

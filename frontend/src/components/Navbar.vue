@@ -7,31 +7,45 @@
 
 		<div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
 			<router-link
-				v-if="!isLoggedIn && !isLogin"  
+				v-if="!isLoggedIn && !isLogin"
 				to="/login"
 				:class="linkClass"
 				class="font-medium hover:opacity-75"
 				>Login</router-link
 			>
 			<router-link
-				v-if=" isLoggedIn && !isLogin"
+				v-if="isLoggedIn && !isLogin"
 				to="/profile"
 				:class="linkClass"
 				class="font-medium hover:opacity-75"
 				>Profile</router-link
 			>
-			<router-link to="/about" :class="linkClass" class="font-medium hover:opacity-75"
-			    v-if="!isLogin"
+			<router-link
+				to="/"
+				:class="linkClass"
+				class="font-medium hover:opacity-75"
+				v-if="!isLogin"
+				>Home</router-link
+			>
+			<router-link
+				to="/about"
+				:class="linkClass"
+				class="font-medium hover:opacity-75"
+				v-if="!isLogin"
 				>About</router-link
 			>
 			<router-link
-			 v-if="!isLogin"
+				v-if="!isLogin"
 				to="/vieworganizations"
 				:class="linkClass"
 				class="font-medium hover:opacity-75"
 				>View Organizations</router-link
 			>
-			<router-link to="/viewprojects" :class="linkClass" class="font-medium hover:opacity-75"  v-if="!isLogin"
+			<router-link
+				to="/viewprojects"
+				:class="linkClass"
+				class="font-medium hover:opacity-75"
+				v-if="!isLogin"
 				>View Projects</router-link
 			>
 		</div>
@@ -47,7 +61,7 @@ export default {
 	props: {
 		theme: String,
 		isLoggedIn: Boolean,
-		isLogin:Boolean
+		isLogin: Boolean,
 	},
 	computed: {
 		navClass() {
