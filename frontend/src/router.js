@@ -75,9 +75,9 @@ const routes = [
     component:()=>import('@/pages/Organizers.vue')
   },
   {
-    name:"Create Account",
-    path:"/createaccount",
-    component:()=>import('@/pages/CreateAccount.vue')
+    name:"SignUp",
+    path:"/signup",
+    component:()=>import('@/pages/SignUp.vue')
   },
   {
     name:"Organisation Approval",
@@ -94,7 +94,17 @@ const routes = [
 let router = createRouter({
   history: createWebHistory('/frontend'),
   routes,
-})
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      };
+    }
+    return { top: 0 }; // Default scroll behavior
+  }
+});
+
 
 // router.beforeEach(async (to, from, next) => {
 //   let isLoggedIn = session.isLoggedIn
