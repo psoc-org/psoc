@@ -1,3 +1,5 @@
+import logging
+
 import frappe
 
 
@@ -66,31 +68,50 @@ def get_contributor_profile(contributor_id: str):
 		return {"status": "error", "message": str(e)}
 
 
+logging.basicConfig()
+
+
 @frappe.whitelist()
 def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
 	contributor = frappe.session.user
 	roles = frappe.get_roles(contributor)
-	allowed = False
-	for role in roles:
-		if role == "Contributor":
-			contributor = frappe.db.get_value("User", {"username": contributor}, "name")
-			contributor_details_doc = frappe.get_doc(
-				{
-					"doctype": "Contributor",
-					"contributor": contributor.get("name"),
-					"about": about,
-					"domain": domain,
-					"technologies": technologies,
-					"website": website_url,
-					"linkedin": linkedin,
-					"github": github,
-				}
-			)
-			contributor_details_doc.insert()
-			contributor_details_doc.add_roles("Contributor")
-			allowed = True
+
+	logging.info(contributor, "contributor")
+	logging.info(roles, "roles")
+
+	contributor_details_doc = frappe.get_doc(
+		{
+			"doctype": "Contributor",
+			"contributor": contributor,
+			"about": about,
+			"domain": domain,
+			"technologies": technologies,
+			"website": website_url,
+			"linkedin": linkedin,
+			"github": github,
+		}
+	)
+	contributor_details_doc.insert(ignore_permissions=True)
+	contributor_details_doc.add_roles("Contributor")
+
+	user_permission = frappe.new_doc("User Permission")
+	user_permission.user = contributor
+	user_permission.allow = "Contributor"
+	user_permission.for_value = contributor_details_doc
+
+	# Save the document
+	user_permission.insert(ignore_permissions=True)
+	frappe.db.commit()
+
+	# roles = frappe.get_roles(contributor)
+	# allowed = False
+	# for role in roles:
+	# 	if role == "Contributor":
+	"""
+	allowed = True
 	if not allowed:
 		frappe.throw("Cannot submit details. Please login.")
+	"""
 
 
 @frappe.whitelist()

@@ -5,15 +5,17 @@ import router from './router'
 import App from './App.vue'
 
 import {
-  Button,
-  Card,
-  Input,
-  setConfig,
-  frappeRequest,
-  resourcesPlugin,
+	Button,
+	Card,
+	Input,
+	setConfig,
+	frappeRequest,
+	resourcesPlugin,
+	FrappeUI,
 } from 'frappe-ui'
 
 let app = createApp(App)
+app.use(FrappeUI)
 
 setConfig('resourceFetcher', frappeRequest)
 

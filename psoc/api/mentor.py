@@ -52,14 +52,14 @@ def login(username: str, password: str):
 def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
 	mentor = frappe.session.user
 	roles = frappe.get_roles(mentor)
+
 	allowed = False
 	for role in roles:
 		if role == "Mentor":
-			mentor = frappe.db.get_value("User", {"username": mentor}, "name")
 			mentor_details_doc = frappe.get_doc(
 				{
 					"doctype": "Mentor",
-					"mentor": mentor.get("name"),
+					"mentor": mentor,
 					"about": about,
 					"domain": domain,
 					"technologies": technologies,
@@ -68,7 +68,7 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 					"github": github,
 				}
 			)
-			mentor_details_doc.insert()
+			mentor_details_doc.insert(ignore_permissions=True)
 			mentor_details_doc.add_roles("Mentor")
 			allowed = True
 	if not allowed:

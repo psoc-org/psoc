@@ -88,7 +88,7 @@
 							type="submit"
 							class="px-6 py-3 rounded-lg shadow transition text-lg font-semibold"
 							:class="buttonClass"
-							@click="signUp"
+							@click="signUpAndDetails"
 						>
 							{{ step === 1 ? 'Save and Next' : 'Submit' }}
 						</button>
@@ -222,7 +222,7 @@ export default {
 						tagline: submissionDetailsData.tagline,
 						domain: submissionDetailsData.domain,
 						technologies: submissionDetailsData.technologies,
-						website: submissionDetailsData.website_url,
+						website_url: submissionDetailsData.website,
 						linkedin: submissionDetailsData.linkedin,
 						github: submissionDetailsData.github,
 					}
@@ -241,7 +241,7 @@ export default {
 				}
 				this.step = 2
 			} else {
-				this.signUp()
+				this.signUpAndDetails()
 			}
 		},
 		toggleTheme() {

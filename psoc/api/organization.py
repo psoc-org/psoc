@@ -56,11 +56,11 @@ def submit_details(
 	allowed = False
 	for role in roles:
 		if role == "Organization":
-			organization = frappe.db.get_value("User", {"username": organization}, "name")
+			organization = frappe.db.get_value("User", {"username": organization}, "email")
 			organization_details_doc = frappe.get_doc(
 				{
 					"doctype": "Organization",
-					"organization": organization.get("name"),
+					"organization": organization.get("email"),
 					"tagline": tagline,
 					"about": about,
 					"domain": domain,
