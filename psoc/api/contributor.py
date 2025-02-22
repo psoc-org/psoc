@@ -19,12 +19,19 @@ def register_and_login(first_name: str, last_name: str | None, username: str, em
 				"last_name": last_name,
 				"full_name": full_name,
 			}
-		).insert(ignore_permissions=True)
+		)
+
+		contributor_doc.insert(ignore_permissions=True)
+		contributor_doc.add_roles("Contributor")
+
 		from frappe.utils.password import update_password
 
 		update_password(username, password)
-		contributor_doc.add_roles("Contributor")
+
 		login(username, password)
+
+		frappe.db.commit()
+		return {"status": "success", "role": "Contributor"}
 	except Exception:
 		frappe.throw("An exception occurred")
 
@@ -71,13 +78,10 @@ def get_contributor_profile(contributor_id: str):
 logging.basicConfig()
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
 	contributor = frappe.session.user
-	roles = frappe.get_roles(contributor)
-
-	logging.info(contributor, "contributor")
-	logging.info(roles, "roles")
+	# roles = frappe.get_roles(contributor)
 
 	contributor_details_doc = frappe.get_doc(
 		{
@@ -91,27 +95,16 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 			"github": github,
 		}
 	)
+
 	contributor_details_doc.insert(ignore_permissions=True)
-	contributor_details_doc.add_roles("Contributor")
 
 	user_permission = frappe.new_doc("User Permission")
 	user_permission.user = contributor
 	user_permission.allow = "Contributor"
 	user_permission.for_value = contributor_details_doc
 
-	# Save the document
 	user_permission.insert(ignore_permissions=True)
 	frappe.db.commit()
-
-	# roles = frappe.get_roles(contributor)
-	# allowed = False
-	# for role in roles:
-	# 	if role == "Contributor":
-	"""
-	allowed = True
-	if not allowed:
-		frappe.throw("Cannot submit details. Please login.")
-	"""
 
 
 @frappe.whitelist()

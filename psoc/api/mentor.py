@@ -17,12 +17,22 @@ def register_and_login(first_name: str, last_name: str | None, username: str, em
 				"last_name": last_name,
 				"full_name": full_name,
 			}
-		).insert(ignore_permissions=True)
+		)
+
+		mentor_doc.save(ignore_permissions=True)
+		mentor_doc.insert(ignore_permissions=True)
+		mentor_doc.add_roles("Mentor")
+
 		from frappe.utils.password import update_password
 
 		update_password(username, password)
-		mentor_doc.add_roles("SoC Admin")
+
 		login(username, password)
+
+		frappe.db.commit()
+
+		return {"status": "success", "role": "Contributor"}
+
 	except Exception:
 		frappe.throw("An exception occurred")
 
@@ -48,31 +58,33 @@ def login(username: str, password: str):
 		frappe.throw("Authentication error")
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
 	mentor = frappe.session.user
-	roles = frappe.get_roles(mentor)
+	# roles = frappe.get_roles(mentor)
 
-	allowed = False
-	for role in roles:
-		if role == "Mentor":
-			mentor_details_doc = frappe.get_doc(
-				{
-					"doctype": "Mentor",
-					"mentor": mentor,
-					"about": about,
-					"domain": domain,
-					"technologies": technologies,
-					"website": website_url,
-					"linkedin": linkedin,
-					"github": github,
-				}
-			)
-			mentor_details_doc.insert(ignore_permissions=True)
-			mentor_details_doc.add_roles("Mentor")
-			allowed = True
-	if not allowed:
-		frappe.throw("Cannot submit details. Please login.")
+	mentor_details_doc = frappe.get_doc(
+		{
+			"doctype": "Mentor",
+			"mentor": mentor,
+			"about": about,
+			"domain": domain,
+			"technologies": technologies,
+			"website": website_url,
+			"linkedin": linkedin,
+			"github": github,
+		}
+	)
+
+	mentor_details_doc.insert(ignore_permissions=True)
+
+	user_permission = frappe.new_doc("User Permission")
+	user_permission.user = mentor
+	user_permission.allow = "Mentor"
+	user_permission.for_value = mentor_details_doc
+
+	user_permission.insert(ignore_permissions=True)
+	frappe.db.commit()
 
 
 @frappe.whitelist()

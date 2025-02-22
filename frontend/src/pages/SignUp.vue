@@ -151,7 +151,7 @@ export default {
 					id: 'website',
 					label: 'Website URL',
 					type: 'url',
-					model: 'webiste',
+					model: 'website',
 					tag: 'input',
 				},
 				{ id: 'github', label: 'GitHub URL', type: 'url', model: 'github', tag: 'input' },
