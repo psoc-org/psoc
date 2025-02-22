@@ -126,7 +126,7 @@
 
 
     <!-- Footer -->
-    <Footer :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme" />
+    <Footer :theme="theme"  />
 
   </div>
 </template>
@@ -134,6 +134,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+const isLoggedIn=false;
 export default {
   components: {
     Navbar,

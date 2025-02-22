@@ -1,16 +1,9 @@
 <template>
-  <!-- Navigation Bar -->
-  <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow-lg">
-    <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
-
-    <button @click="toggleTheme" :class="buttonClass" class="px-4 py-2 rounded-lg transition duration-300 transform hover:scale-105">
-      {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-    </button>
-  </nav>
+  <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
 
   <!-- Page Container -->
-  <div :class="themeClass" class="min-h-screen flex justify-center items-center p-10 transition-all duration-500 mt-12">
-    <div :class="cardClass" class="w-full max-w-4xl mx-auto p-10 rounded-xl shadow-2xl">
+  <div :class="themeClass" class="min-h-screen flex flex-col justify-center transition-all duration-500 mt-15">
+    <div :class="cardClass" class="w-full max-w-4xl mx-auto p-10 rounded-xl shadow-2xl mb-10">
       <h2 class="text-3xl font-bold text-center mb-6">Create Your Organization</h2>
       
       <form @submit.prevent="submitForm" class="space-y-6">
@@ -66,16 +59,23 @@
         </div>
       </form>
     </div>
+  <Footer :theme="theme" class="mt-12" />
   </div>
+
+  <!-- Footer with Margin -->
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import InputField from '@/components/InputField.vue';
 import TextareaField from '@/components/TextArea.vue';
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
 // Theme Management
 const theme = ref(localStorage.getItem("theme") || "light");
+const isLoggedIn=false;
 
 const themeClass = computed(() => theme.value === "light" ? "bg-light-background text-light-text" : "bg-dark-background text-dark-text");
 const navClass = computed(() => theme.value === "light" ? "bg-light-navBackground text-light-navText" : "bg-dark-navBackground text-dark-navText");

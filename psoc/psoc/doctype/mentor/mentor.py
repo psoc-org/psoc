@@ -14,11 +14,13 @@ class Mentor(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		about_me: DF.Data
+		about: DF.Data
+		domain: DF.Data
 		github: DF.Data
 		linkedin: DF.Data
 		mentor: DF.Link
-		resume: DF.Attach
+		technologies: DF.Data
+		website: DF.Data | None
 	# end: auto-generated types
 
 	pass

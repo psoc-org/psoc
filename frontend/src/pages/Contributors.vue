@@ -1,7 +1,7 @@
 <template>
   <div :class="themeClass" class="min-h-screen flex items-center justify-center px-6 transition-colors duration-300">
     <!-- Navbar -->
-    <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow">
+    <!-- <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow">
       <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
 
       <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
@@ -14,7 +14,7 @@
       <button @click="toggleTheme" :class="buttonClass" class="px-4 py-2 rounded-lg transition">
         {{ theme === "light" ? "Dark Mode" : "Light Mode" }}
       </button>
-    </nav>
+    </nav> -->
     
     <div class="w-full max-w-md p-8 rounded-xl shadow-lg hover:shadow-2xl transition" :class="cardClass">
       <h2 class="text-3xl font-bold text-center mb-6">Create a New Account</h2>
@@ -69,6 +69,7 @@
 
 <script>
 export default {
+  
   data() {
     return {
       theme: "light",
