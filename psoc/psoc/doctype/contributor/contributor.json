@@ -10,7 +10,8 @@
   "linkedin",
   "github",
   "website",
-  "tagline"
+  "technologies",
+  "domain"
  ],
  "fields": [
   {
@@ -48,16 +49,21 @@
    "label": "Website"
   },
   {
-   "fieldname": "tagline",
+   "fieldname": "technologies",
    "fieldtype": "Data",
-   "label": "Tagline",
+   "label": "Technologies",
    "reqd": 1
+  },
+  {
+   "fieldname": "domain",
+   "fieldtype": "Data",
+   "label": "Domain"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-22 21:03:29.068159",
+ "modified": "2025-02-22 21:41:23.521367",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Contributor",

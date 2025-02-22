@@ -16,9 +16,10 @@ class Contributor(Document):
 
 		about: DF.SmallText
 		contributor: DF.Link
+		domain: DF.Data | None
 		github: DF.Data
 		linkedin: DF.Data
-		tagline: DF.Data
+		technologies: DF.Data
 		website: DF.Data | None
 	# end: auto-generated types
 
