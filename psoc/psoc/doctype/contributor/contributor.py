@@ -14,10 +14,11 @@ class Contributor(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		email: DF.Data
-		exp_area: DF.Data
-		full_name: DF.Data
-		password: DF.Password
+		about: DF.Data
+		contributor: DF.Link
+		github: DF.Data
+		linkedin: DF.Data
+		resume: DF.Attach
 	# end: auto-generated types
 
 	pass

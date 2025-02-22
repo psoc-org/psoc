@@ -5,45 +5,53 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "full_name",
-  "email",
-  "password",
-  "exp_area"
+  "about",
+  "contributor",
+  "linkedin",
+  "github",
+  "resume"
  ],
  "fields": [
   {
-   "fieldname": "full_name",
+   "fieldname": "about",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Full Name",
+   "label": "About Me",
    "reqd": 1
   },
   {
-   "fieldname": "email",
-   "fieldtype": "Data",
+   "fieldname": "contributor",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Email",
+   "label": "Contributor",
+   "options": "User",
    "reqd": 1
   },
   {
-   "fieldname": "password",
-   "fieldtype": "Password",
+   "fieldname": "linkedin",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Password",
+   "label": "LinkedIn",
    "reqd": 1
   },
   {
-   "fieldname": "exp_area",
+   "fieldname": "github",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Expertise Area",
+   "label": "Github",
+   "reqd": 1
+  },
+  {
+   "fieldname": "resume",
+   "fieldtype": "Attach",
+   "label": "Resume",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-22 13:14:41.714758",
+ "modified": "2025-02-22 13:40:43.114969",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Contributor",
