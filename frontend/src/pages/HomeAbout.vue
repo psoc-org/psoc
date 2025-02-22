@@ -3,7 +3,7 @@
       
       <!-- Navbar -->
       <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow">
-        <h1 class="text-3xl font-extrabold">PSoC</h1>
+        <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
   
         <!-- Center-aligned Navigation Links -->
         <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
