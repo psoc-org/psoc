@@ -4,11 +4,11 @@ import frappe
 @frappe.whitelist(allow_guest=True)
 def register(first_name: str, last_name: str | None, username: str, email: str, password: str):
 	try:
-		contributor_exists = frappe.db.exists("User", {"username": username})
-		if contributor_exists:
+		mentor_exists = frappe.db.exists("User", {"username": username})
+		if mentor_exists:
 			frappe.throw("Username is already taken")
 		full_name = f"{first_name} {last_name}"
-		contributor_doc = frappe.get_doc(
+		mentor_doc = frappe.get_doc(
 			{
 				"doctype": "User",
 				"username": username,
@@ -21,7 +21,7 @@ def register(first_name: str, last_name: str | None, username: str, email: str, 
 		from frappe.utils.password import update_password
 
 		update_password(username, password)
-		contributor_doc.add_roles("Contributor")
+		mentor_doc.add_roles("SoC Admin")
 	except Exception:
 		frappe.throw("An exception occurred")
 
@@ -48,10 +48,5 @@ def login(username: str, password: str):
 
 
 @frappe.whitelist()
-def submit_details(tagline: str, about: str):
-	pass
-
-
-@frappe.whitelist()
-def submit_proposal():
+def get_approved_contributors():
 	pass

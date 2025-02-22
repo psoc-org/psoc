@@ -2,7 +2,7 @@ import frappe
 
 
 @frappe.whitelist(allow_guest=True)
-def register(organization_name: str, organization_id: str, organization_email: str, password: str):
+def register_and_login(organization_name: str, organization_id: str, organization_email: str, password: str):
 	try:
 		organization_exists = frappe.db.exists("User", {"username": organization_id})
 		if organization_exists:
@@ -23,6 +23,7 @@ def register(organization_name: str, organization_id: str, organization_email: s
 
 	except Exception:
 		frappe.throw("An exception occurred")
+	login(organization_id, password)
 
 
 @frappe.whitelist(allow_guest=True)
@@ -44,6 +45,11 @@ def login(organization_id: str, password: str):
 
 	except frappe.AuthenticationError:
 		frappe.throw("Authentication error")
+
+
+@frappe.whitelist()
+def submit_details(tagline: str, about: str):
+	pass
 
 
 @frappe.whitelist()

@@ -48,20 +48,10 @@ def login(username: str, password: str):
 
 
 @frappe.whitelist()
-def approve_organization_proposal():
+def approve_organization_proposal(proposal_id: str):
 	pass
 
 
 @frappe.whitelist()
 def reject_organization_proposal():
-	pass
-
-
-@frappe.whitelist()
-def approve_contributor_proposal():
-	pass
-
-
-@frappe.whitelist()
-def reject_contributor_proposal():
 	pass
