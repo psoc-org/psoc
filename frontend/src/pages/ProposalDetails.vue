@@ -1,11 +1,9 @@
 <template>
-  <div :class="themeClass" class="min-h-screen flex flex-col items-center p-10">
-    <nav :class="navClass" class="w-full py-6 px-10 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow-lg rounded-b-xl">
-      <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
-      <button @click="toggleTheme" :class="buttonClass" class="px-5 py-3 rounded-xl transition-transform transform hover:scale-105">
-        {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-      </button>
-    </nav>
+  <div :class="themeClass" class="min-h-screen flex flex-col transition-colors duration-300">
+    <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
+    
+    <!-- Main content container with flex-grow to fill available space -->
+    <div class="flex-grow flex items-center justify-center">
     <div class="min-h-screen flex justify-center items-center p-12 mt-12">
       <div :class="cardClass" class="w-full max-w-4xl mx-auto p-12 shadow-2xl  rounded-xl">
         <div class="text-center mb-12">
@@ -45,12 +43,15 @@
         </div>
       </div>
     </div>
+    </div>
+    <Footer :theme="theme" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 const theme = ref(localStorage.getItem("theme") || "light");
 const themeClass = computed(() => theme.value === "light" ? "bg-light-background text-light-text" : "bg-dark-background text-dark-text");
 const navClass = computed(() => theme.value === "light" ? "bg-light-navBackground text-light-navText" : "bg-dark-navBackground text-dark-navText");

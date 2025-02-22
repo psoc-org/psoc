@@ -60,21 +60,6 @@ const routes = [
     component:()=>import('@/pages/ViewProjects.vue')
   },
   {
-    name:"Contributors",
-    path:"/contributors",
-    component:()=>import('@/pages/Contributors.vue')
-  },
-  {
-    name:"Mentors",
-    path:"/mentors",
-    component:()=>import('@/pages/Mentors.vue')
-  },
-  {
-    name:"Organizers",
-    path:"/organizers",
-    component:()=>import('@/pages/Organizers.vue')
-  },
-  {
     name:"SignUp",
     path:"/signup",
     component:()=>import('@/pages/SignUp.vue')

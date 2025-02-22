@@ -1,15 +1,12 @@
 <template>
-  <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow">
-    <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
+   <div :class="themeClass" class="min-h-screen flex flex-col transition-colors duration-300 ">
+    <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
+    
+    <!-- Main content container with flex-grow to fill available space -->
+    <div class="flex-grow flex items-center justify-center">
 
-    <button @click="toggleTheme" :class="buttonClass" class="px-4 py-2 rounded-lg transition">
-      {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-    </button>
-  </nav>
-  <div :class="themeClass" class="min-h-screen flex flex-col items-center p-10">
-    <h1 :class="linkClass" class="text-3xl font-bold mb-8">Project Proposals</h1>
-
-    <div class="w-full max-w-5xl space-y-6">
+    <div class="w-full max-w-5xl space-y-6 ">
+    <h1 :class="linkClass" class="text-3xl font-bold mb-8 mt-20 ml-[40%]">Project Proposals</h1>
       <div 
         v-for="proposal in proposals" 
         :key="proposal.id" 
@@ -52,10 +49,14 @@
       </div>
     </div>
   </div>
+<Footer :theme="theme" />
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
