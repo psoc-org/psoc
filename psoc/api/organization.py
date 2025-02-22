@@ -20,7 +20,7 @@ def register_and_login(organization_name: str, organization_id: str, organizatio
 
 		update_password(organization_id, password)
 		organization_doc.add_roles("Organization")
-
+		login(organization_id, password)
 	except Exception:
 		frappe.throw("An exception occurred")
 	login(organization_id, password)

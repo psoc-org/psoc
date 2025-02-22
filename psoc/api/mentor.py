@@ -2,7 +2,7 @@ import frappe
 
 
 @frappe.whitelist(allow_guest=True)
-def register(first_name: str, last_name: str | None, username: str, email: str, password: str):
+def register_and_login(first_name: str, last_name: str | None, username: str, email: str, password: str):
 	try:
 		mentor_exists = frappe.db.exists("User", {"username": username})
 		if mentor_exists:
@@ -22,6 +22,7 @@ def register(first_name: str, last_name: str | None, username: str, email: str, 
 
 		update_password(username, password)
 		mentor_doc.add_roles("SoC Admin")
+		login(username, password)
 	except Exception:
 		frappe.throw("An exception occurred")
 
