@@ -4,6 +4,7 @@ app_publisher = "Team PSoC"
 app_description = "Platform for Season of Commits"
 app_email = "psoc@riseup.net"
 app_license = "agpl-3.0"
+export_python_type_annotations = True
 
 # Apps
 # ------------------
@@ -244,4 +245,3 @@ app_license = "agpl-3.0"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
