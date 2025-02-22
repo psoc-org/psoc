@@ -75,7 +75,7 @@ import {
 export default {
 	data() {
 		return {
-			theme: "light",
+			theme:"light",
 			step: 1,
 			firstPartData: {
 				firstName: '',
