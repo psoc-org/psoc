@@ -1,20 +1,9 @@
 <template>
-	<nav
-		:class="navClass"
-		class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow-lg"
-	>
-		<router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
-
-		<button
-			@click="toggleTheme"
-			:class="buttonClass"
-			class="px-4 py-2 rounded-lg transition duration-300 transform hover:scale-105"
-		>
-			{{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-		</button>
-	</nav>
-
-	<div :class="themeClass" class="min-h-screen flex justify-center items-center p-10 mt-12">
+	<div :class="themeClass" class="min-h-screen flex flex-col transition-colors duration-300">
+    <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme"/>
+    
+    <!-- Main content container with flex-grow to fill available space -->
+    <div class="flex-grow flex items-center justify-center">
 		<div :class="cardClass" class="w-full max-w-4xl mx-auto p-10 rounded-xl shadow-xl">
 			<h1 class="text-3xl font-semibold text-center mb-8">Submit Your Proposal</h1>
 
@@ -163,12 +152,16 @@
 			</form>
 		</div>
 	</div>
+<Footer :theme="theme" />
+	</div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import InputField from '@/components/InputField.vue'
 import TextArea from '@/components/TextArea.vue'
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
 const theme = ref(localStorage.getItem('theme') || 'light')
 
