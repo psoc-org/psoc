@@ -9,12 +9,13 @@
   "contributor",
   "linkedin",
   "github",
-  "resume"
+  "website",
+  "tagline"
  ],
  "fields": [
   {
    "fieldname": "about",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "About Me",
    "reqd": 1
@@ -42,16 +43,21 @@
    "reqd": 1
   },
   {
-   "fieldname": "resume",
-   "fieldtype": "Attach",
-   "label": "Resume",
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  },
+  {
+   "fieldname": "tagline",
+   "fieldtype": "Data",
+   "label": "Tagline",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-22 13:40:43.114969",
+ "modified": "2025-02-22 21:03:29.068159",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Contributor",
