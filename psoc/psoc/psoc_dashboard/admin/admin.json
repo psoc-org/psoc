@@ -1,0 +1,21 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Number of Proposals",
+   "width": "Half"
+  }
+ ],
+ "creation": "2025-02-22 15:10:26.630336",
+ "dashboard_name": "Admin",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2025-02-22 15:55:44.659640",
+ "modified_by": "Administrator",
+ "module": "PSoC",
+ "name": "Admin",
+ "owner": "Administrator"
+}

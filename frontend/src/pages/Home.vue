@@ -2,26 +2,7 @@
   <div :class="themeClass" class="min-h-screen transition-colors duration-300">
     
     <!-- Navbar -->
-    <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow">
-      <h1 class="text-3xl font-extrabold">PSoC</h1>
-
-      <!-- Center-aligned Navigation Links -->
-      <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
-        <router-link v-if="!isLoggedIn" to="/login" :class="linkClass" class="font-medium hover:opacity-75">Login</router-link>
-        <router-link v-else to="/" :class="linkClass" class="font-medium hover:opacity-75">Profile</router-link>
-        <router-link to="/about" :class="linkClass" class="font-medium hover:opacity-75">About</router-link>
-        <router-link to="/vieworganizations" :class="linkClass" class="font-medium hover:opacity-75">View Organizations</router-link>
-        <router-link to="/viewprojects" :class="linkClass" class="font-medium hover:opacity-75">View Projects</router-link>
-        <router-link to="/contributors" :class="linkClass" class="font-medium hover:opacity-75">Contributors</router-link>
-        <router-link to="/mentors" :class="linkClass" class="font-medium hover:opacity-75">Mentors</router-link>
-        <router-link to="/organizers" :class="linkClass" class="font-medium hover:opacity-75">Organizers</router-link>
-      </div>
-
-      <!-- Theme Toggle Button -->
-      <button @click="toggleTheme" :class="buttonClass" class="px-4 py-2 rounded-lg transition">
-        {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
-      </button>
-    </nav>
+    <Navbar :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme" />
 
     <!-- Hero Section -->
     <header class="w-full text-center py-28 mt-16 rounded-b-2xl shadow-sm" :class="themeClass">
@@ -145,14 +126,19 @@
 
 
     <!-- Footer -->
-    <footer class="text-center py-4 mt-8 shadow-sm" :class="navClass">
-      &copy; 2025 PSoC - Platform for Season of Commits - by Team Askk for FOSS
-    </footer>
+    <Footer :theme="theme" :isLoggedIn="isLoggedIn" @toggle-theme="toggleTheme" />
+
   </div>
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 export default {
+  components: {
+    Navbar,
+    Footer
+  },
   data() {
     return {
       theme: "light",

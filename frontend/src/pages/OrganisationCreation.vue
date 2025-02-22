@@ -1,7 +1,7 @@
 <template>
   <!-- Navigation Bar -->
   <nav :class="navClass" class="w-full py-4 px-8 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow-lg">
-    <h1 class="text-3xl font-extrabold">PSoC</h1>
+    <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
 
     <button @click="toggleTheme" :class="buttonClass" class="px-4 py-2 rounded-lg transition duration-300 transform hover:scale-105">
       {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}

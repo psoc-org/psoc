@@ -1,7 +1,7 @@
 <template>
   <div :class="themeClass" class="min-h-screen flex flex-col items-center p-10">
     <nav :class="navClass" class="w-full py-6 px-10 flex items-center justify-between fixed top-0 left-0 right-0 z-50 shadow-lg rounded-b-xl">
-      <h1 class="text-4xl font-extrabold tracking-wide">PSoC</h1>
+      <router-link to="/" class="text-3xl font-extrabold cursor-pointer">PSoC</router-link>
       <button @click="toggleTheme" :class="buttonClass" class="px-5 py-3 rounded-xl transition-transform transform hover:scale-105">
         {{ theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode' }}
       </button>

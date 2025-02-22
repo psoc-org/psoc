@@ -96,7 +96,11 @@ export default {
   },
   methods: {
     handleLogin() {
-      alert(`Logging in as: ${this.email}`);
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("email", this.email);
+      localStorage.setItem("password", this.password);
+      alert(`Logged in successfully as: ${this.email}`);
+      this.$router.push("/profile");
     },
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";
