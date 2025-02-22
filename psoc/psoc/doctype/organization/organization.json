@@ -1,0 +1,58 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-22 10:30:17.356525",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "org_id",
+  "tagline",
+  "about"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "org_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Organization ID",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "tagline",
+   "fieldtype": "Data",
+   "label": "Tagline"
+  },
+  {
+   "fieldname": "about",
+   "fieldtype": "Data",
+   "label": "About"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-22 10:34:05.836101",
+ "modified_by": "Administrator",
+ "module": "PSoC",
+ "name": "Organization",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

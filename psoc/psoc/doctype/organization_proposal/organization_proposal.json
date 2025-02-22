@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-22 10:39:05.741450",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "reason",
+  "projects",
+  "execution_plan",
+  "mentoring_plan",
+  "support_from_soc",
+  "status",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Organization Proposal",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nAccepted\nRejected",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Long Text",
+   "label": "Reason for participating in Season of Commits",
+   "reqd": 1
+  },
+  {
+   "fieldname": "projects",
+   "fieldtype": "Text Editor",
+   "label": "Projects",
+   "reqd": 1
+  },
+  {
+   "fieldname": "execution_plan",
+   "fieldtype": "Text Editor",
+   "label": "Execution Plan",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mentoring_plan",
+   "fieldtype": "Long Text",
+   "label": "Mentoring Support Plan",
+   "reqd": 1
+  },
+  {
+   "fieldname": "support_from_soc",
+   "fieldtype": "Long Text",
+   "label": "Support from SoC",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-02-22 10:45:39.847733",
+ "modified_by": "Administrator",
+ "module": "PSoC",
+ "name": "Organization Proposal",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Organization",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
