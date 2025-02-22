@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class ContributorProposal(Document):
+class Project(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,14 +14,11 @@ class ContributorProposal(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		amended_from: DF.Link | None
-		con_name: DF.Data
 		desc: DF.Data
-		docs: DF.Attach
-		org_name: DF.Data
-		pro_id: DF.Data
-		prop_name: DF.Data
-		results: DF.Data
-		user_id: DF.Data
+		github: DF.Data
+		location: DF.Data
+		org_id: DF.Data
+		pro_name: DF.Data
 	# end: auto-generated types
 
+	pass

@@ -86,6 +86,22 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 	user_permission.insert(ignore_permissions=True)
 	frappe.db.commit()
 
+@frappe.whitelist(allow_guest=True)
+def get_mentor_profile(contributor_id: str):
+	try:
+		# Fetch a specific contributor profile based on ID
+		contributor = frappe.get_all(
+			"Contributor",
+			filters={"name": contributor_id},
+			fields=["about", "contributor", "linkedin", "github", "resume"],
+		)
+		if not contributor:
+			return {"status": "error", "message": "Contributor not found"}
+
+		return {"status": "success", "data": contributor}
+	except Exception as e:
+		frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
+		return {"status": "error", "message": str(e)}
 
 @frappe.whitelist()
 def get_approved_contributors():
