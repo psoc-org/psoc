@@ -6,46 +6,52 @@
             <div :class="cardClass" class="w-full max-w-6xl p-10 rounded-2xl shadow-xl border border-opacity-30">
                 <div class="flex flex-col md:flex-row items-center md:items-start">
                     <div class="flex flex-col items-center md:items-start w-full md:w-1/3">
-                        <!-- Modified avatar circle with larger letter -->
                         <div 
                             class="w-44 h-44 rounded-full shadow-lg transition transform hover:scale-105 flex items-center justify-center"
                             :class="avatarClass"
                         >
-                            <span class="text-[8rem] font-bold leading-none">{{ getFirstLetter(user.name) }}</span>
+                            <span class="text-[8rem] font-bold leading-none">{{ getFirstLetter(userData?.name || '') }}</span>
                         </div>
                         <h2 class="mt-5 text-3xl font-bold" :class="textClass">
-                            {{ user.name }}
+                            {{ userData?.name || 'Loading...' }}
                         </h2>
                         <p class="text-lg opacity-80" :class="subTextClass">
-                            {{ user.email }}
+                            {{ userData?.email || 'Loading...' }}
                         </p>
                         <p class="mt-2 text-md font-semibold px-4 py-1 rounded-full" 
                            :class="roleClass">
-                            {{ user.role }}
+                            {{ userRole }}
                         </p>
                     </div>
 
-                    <!-- Rest of the template remains the same -->
                     <div class="w-full md:w-2/3 mt-6 md:mt-0 md:pl-6">
                         <h3 class="text-2xl font-semibold border-b pb-2 mb-4" :class="titleClass">
                             About Me
                         </h3>
-                        <p class="text-lg opacity-90" :class="subTextClass">{{ user.about }}</p>
+                        <p class="text-lg opacity-90" :class="subTextClass">{{ userData?.about || 'Loading...' }}</p>
 
                         <div class="mt-5 flex flex-wrap gap-4">
-                            <a v-for="(link, key) in user.links" :key="key" :href="link.url" :class="buttonPrimary"
+                            <a v-if="userData?.github" :href="userData.github" :class="buttonPrimary"
                                 class="px-5 py-2 rounded-lg transition duration-300 transform hover:scale-110 shadow-md">
-                                {{ link.label }}
+                                GitHub
+                            </a>
+                            <a v-if="userData?.linkedin" :href="userData.linkedin" :class="buttonPrimary"
+                                class="px-5 py-2 rounded-lg transition duration-300 transform hover:scale-110 shadow-md">
+                                LinkedIn
+                            </a>
+                            <a v-if="userData?.website_url" :href="userData.website_url" :class="buttonPrimary"
+                                class="px-5 py-2 rounded-lg transition duration-300 transform hover:scale-110 shadow-md">
+                                Portfolio
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="user.role === 'Contributor'" class="mt-12">
+                <div v-if="userRole === 'Contributor' && proposal.project" class="mt-12">
                     <h3 class="text-2xl font-semibold border-b pb-2 mb-4" :class="titleClass">
                         Submitted Proposals
                     </h3>
-                    <div v-for="proposal in proposals" :key="proposal.id" :class="cardClass"
+                    <div v-for="proposal in proposalsData" :key="proposal.id" :class="cardClass"
                         class="mb-4 p-6 rounded-lg border-2 shadow-lg transition duration-300 hover:shadow-2xl hover:border-primary hover:scale-105">
                         <h4 class="text-xl font-bold" :class="titleClass">
                             {{ proposal.projectName }}
@@ -55,10 +61,10 @@
                         </p>
                         <p class="mt-2 text-md" :class="subTextClass">{{ proposal.description }}</p>
                         <div class="mt-3 flex flex-wrap gap-2">
-                            <span v-for="tech in proposal.technologies" :key="tech" 
+                            <span v-for="tech in proposal.technologies?.split(',')" :key="tech" 
                                   class="px-3 py-1 rounded-full text-sm"
                                   :class="techBadgeClass">
-                                {{ tech }}
+                                {{ tech.trim() }}
                             </span>
                         </div>
                     </div>
@@ -70,7 +76,6 @@
 </template>
 
 <script setup>
-// Script remains exactly the same as before
 import { ref, computed, onMounted } from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
@@ -78,45 +83,48 @@ import { createResource } from 'frappe-ui'
 
 const theme = ref(localStorage.getItem('theme') || 'light')
 const isLoggedIn = ref(true)
+const userRole = ref(localStorage.getItem('role') || '')
+const userData = ref(null)
+const proposalsData = ref([])
 
-// Mock user data
-const user = ref({
-    name: 'Sarah Anderson',
-    email: 'sarah.anderson@gmail.com',
-    role: 'Contributor',
-    about: 'Passionate software developer with 3 years of experience in full-stack development. Currently pursuing my Master\'s in Computer Science with a focus on Machine Learning and AI. I love contributing to open-source projects and mentoring fellow developers. When I\'m not coding, you can find me hiking or playing chess.',
-    links: [
-        { label: 'GitHub', url: 'https://github.com/sarahanderson' },
-        { label: 'LinkedIn', url: 'https://linkedin.com/in/sarahanderson' },
-        { label: 'Portfolio', url: 'https://sarahanderson.dev' },
-        { label: 'Blog', url: 'https://blog.sarahanderson.dev' }
-    ]
-})
+// Function to fetch user profile data
+const fetchUserProfile = async () => {
+    const profileResource = createResource({
+        url: userRole.value === 'Contributor' 
+            ? 'psoc.api.contributor.get_contributor_profile'
+            : 'psoc.api.mentor.get_mentor_profile',
+        onSuccess(response) {
+            if (response.status === 'success') {
+                userData.value = response.data
+                console.log('Profile fetched successfully:', response.data)
+            } else {
+                console.error('Error:', response.message)
+            }
+        },
+        onError(error) {
+            console.error('Error fetching profile:', error)
+        }
+    })
 
-// Mock proposals data
-const proposals = ref([
-    {
-        id: 1,
-        projectName: 'AI-Powered Code Review Assistant',
-        organization: 'TechLabs Foundation',
-        description: 'Developing an intelligent code review system that uses machine learning to identify potential bugs, security vulnerabilities, and code quality issues. The system will integrate with popular version control platforms and provide real-time feedback to developers.',
-        technologies: ['Python', 'TensorFlow', 'Git', 'Docker']
-    },
-    {
-        id: 2,
-        projectName: 'Sustainable Energy Dashboard',
-        organization: 'GreenTech Initiative',
-        description: 'Creating an interactive dashboard for tracking and visualizing renewable energy usage across different regions. The project aims to help communities make data-driven decisions about sustainable energy adoption.',
-        technologies: ['Vue.js', 'D3.js', 'Node.js', 'MongoDB']
-    },
-    {
-        id: 3,
-        projectName: 'Accessibility Testing Framework',
-        organization: 'Web Standards Group',
-        description: 'Building an automated testing framework for web accessibility compliance. The tool will help developers ensure their applications meet WCAG guidelines and provide suggestions for improvements.',
-        technologies: ['JavaScript', 'Jest', 'Puppeteer', 'ARIA']
+    await profileResource.submit()
+}
+
+const fetchProposals = async () => {
+    if (userRole.value === 'Contributor') {
+        const proposalsResource = createResource({
+            url: 'psoc.api.contributor.get_contributor_profile',
+            onSuccess(response) {
+                proposalsData.value = response
+                console.log('Proposals fetched successfully:', response)
+            },
+            onError(error) {
+                console.error('Error fetching proposals:', error)
+            }
+        })
+
+        await proposalsResource.submit()
     }
-])
+}
 
 const themeClass = computed(() =>
     theme.value === 'light'
@@ -168,7 +176,9 @@ const toggleTheme = () => {
     document.documentElement.classList.toggle('dark', theme.value === 'dark')
 }
 
-onMounted(() => {
+onMounted(async () => {
     document.documentElement.classList.toggle('dark', theme.value === 'dark')
+    await fetchUserProfile()
+    await fetchProposals()
 })
 </script>
