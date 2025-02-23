@@ -224,6 +224,7 @@ export default {
 					},
 					onSuccess: () => {
 						console.log('Login successful')
+						localStorage.setItem('isLoggedIn', 'true')
 						localStorage.setItem('role', 'Contributor')
 
 						const submissionDetailsData = this.secondPartData
