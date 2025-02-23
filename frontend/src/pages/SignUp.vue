@@ -101,6 +101,7 @@
 
 <script>
 import { createResource } from 'frappe-ui'
+import { useRouter } from 'vue-router'
 
 export default {
 	data() {
@@ -172,6 +173,10 @@ export default {
 			],
 		}
 	},
+	setup() {
+		const router = useRouter()
+		return { router }
+	},
 	computed: {
 		themeClass() {
 			return this.theme === 'light'
@@ -207,36 +212,37 @@ export default {
 							username: signUpData.username,
 							email: signUpData.email,
 							password: signUpData.password,
-							api_key:"Contributor"
+							api_key: 'Contributor',
 						}
 					},
-					onSuccess() {
+					onSuccess: () => {
 						console.log('Login successful')
 						localStorage.setItem('role', 'Contributor')
+
+						const submissionDetailsData = this.secondPartData
+						const submissionDetailsResource = createResource({
+							url: 'psoc.api.contributor.submit_details',
+							makeParams() {
+								return {
+									about: submissionDetailsData.about,
+									domain: submissionDetailsData.domain,
+									technologies: submissionDetailsData.technologies,
+									website_url: submissionDetailsData.website,
+									linkedin: submissionDetailsData.linkedin,
+									github: submissionDetailsData.github,
+								}
+							},
+							onSuccess: () => {
+								console.log('Detail submission successful')
+								this.router.push('/')
+							},
+						})
+
+						submissionDetailsResource.submit()
 					},
 				})
 
 				signUpResource.submit()
-
-				const submissionDetailsData = this.secondPartData
-				const submissionDetailsResource = createResource({
-					url: 'psoc.api.contributor.submit_details',
-					makeParams() {
-						return {
-							about: submissionDetailsData.about,
-							domain: submissionDetailsData.domain,
-							technologies: submissionDetailsData.technologies,
-							website_url: submissionDetailsData.website,
-							linkedin: submissionDetailsData.linkedin,
-							github: submissionDetailsData.github,
-						}
-					},
-					onSuccess() {
-						console.log('Detail submission successful')
-					},
-				})
-
-				submissionDetailsResource.submit()
 			}
 		},
 		async handleNextStep() {
