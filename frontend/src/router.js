@@ -65,6 +65,16 @@ const routes = [
     component:()=>import('@/pages/SignUp.vue')
   },
   {
+    name:"SignUpMentor",
+    path:"/signupmentor",
+    component:()=>import('@/pages/SignUpMentor.vue')
+  },
+  {
+    name:"SignUpOrganization",
+    path:"/signuporganizer",
+    component:()=>import('@/pages/SignUpOrganization.vue')
+  },
+  {
     name:"Admin Dashboard",
     path:"/admin/dashboard",
     component:()=>import('@/pages/AdminDashboard.vue')

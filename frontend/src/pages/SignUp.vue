@@ -106,7 +106,7 @@ import { useRouter } from 'vue-router'
 export default {
 	data() {
 		return {
-			theme: 'light',
+			theme: localStorage.getItem('theme') || 'light', // Initialize theme from localStorage
 			step: 1,
 			firstPartData: {
 				firstName: '',
@@ -176,6 +176,13 @@ export default {
 	setup() {
 		const router = useRouter()
 		return { router }
+	},
+	mounted() {
+		// Ensure theme is synced with localStorage on component mount
+		const savedTheme = localStorage.getItem('theme')
+		if (savedTheme) {
+			this.theme = savedTheme
+		}
 	},
 	computed: {
 		themeClass() {
@@ -256,7 +263,7 @@ export default {
 		},
 		toggleTheme() {
 			this.theme = this.theme === 'light' ? 'dark' : 'light'
-			localStorage.setItem('theme', this.theme)
+			localStorage.setItem('theme', this.theme) // Save theme change to localStorage
 		},
 	},
 }

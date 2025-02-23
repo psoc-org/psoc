@@ -7,13 +7,13 @@
   
 	  <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6">
 		<router-link
-		  v-if="isLoggedIn === 'true' && isLogin === 'true'"
+		  v-if="isLoggedIn !== 'true' && isLogin !== 'true'"
 		  to="/login"
 		  :class="linkClass"
 		  class="font-medium hover:opacity-75"
 		>Login</router-link>
 		<router-link
-		  v-if="isLoggedIn !== 'true' && isLogin !== 'true'"
+		  v-if="isLoggedIn === 'true' && isLogin === 'true'"
 		  :to="profileRoute"
 		  :class="linkClass"
 		  class="font-medium hover:opacity-75"

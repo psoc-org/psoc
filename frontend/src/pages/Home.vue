@@ -199,7 +199,15 @@ export default {
       localStorage.setItem("theme", this.theme);
     },
     navigateToCreateAccount(userType) {
-      this.$router.push({ path: "/signup", query: { type: userType } });
+      let path = "/signup"; // Default path
+
+      if (userType === "mentor") {
+        path = "/signupmentor";
+      } else if (userType === "organization") {
+        path = "/signuporganizer";
+      }
+
+      this.$router.push({ path });
     }
   },
   created() {

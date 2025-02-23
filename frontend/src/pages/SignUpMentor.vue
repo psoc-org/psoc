@@ -105,7 +105,7 @@ import { createResource } from 'frappe-ui'
 export default {
 	data() {
 		return {
-			theme: 'light',
+			theme: localStorage.getItem('theme') || 'light', // Initialize theme from localStorage
 			step: 1,
 			firstPartData: {
 				firstName: '',
@@ -233,6 +233,7 @@ export default {
 					},
 					onSuccess() {
 						console.log('Detail submission successful')
+						this.router.push('/')
 					},
 				})
 

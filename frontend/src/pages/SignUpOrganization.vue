@@ -103,7 +103,7 @@
 export default {
 	data() {
 		return {
-			theme: 'light',
+			theme: localStorage.getItem('theme') || 'light', // Initialize theme from localStorage
 			step: 1,
 			firstPartData: {
 				organizationName: '',
@@ -232,6 +232,7 @@ export default {
 					},
 					onSuccess() {
 						console.log('Detail submission successful')
+						this.router.push('/')
 					},
 				})
 				submissionDetailsResource.submit()
