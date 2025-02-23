@@ -5,52 +5,53 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "org_id",
-  "pro_name",
-  "desc",
-  "github",
-  "location"
+  "organization",
+  "project_name",
+  "technologies",
+  "description",
+  "github"
  ],
  "fields": [
   {
-   "fieldname": "org_id",
+   "fieldname": "github",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Organisation Id",
+   "label": "GitHub",
    "reqd": 1
   },
   {
-   "fieldname": "pro_name",
-   "fieldtype": "Data",
+   "fieldname": "organization",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Name",
+   "label": "Organisation",
+   "options": "Organization",
    "reqd": 1
   },
   {
-   "fieldname": "desc",
+   "fieldname": "technologies",
    "fieldtype": "Data",
+   "label": "Technologies",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
    "in_list_view": 1,
    "label": "Description",
    "reqd": 1
   },
   {
-   "fieldname": "github",
+   "fieldname": "project_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Github Link",
-   "reqd": 1
-  },
-  {
-   "fieldname": "location",
-   "fieldtype": "Data",
-   "label": "location",
+   "label": "Project Name",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-23 03:41:55.079282",
+ "modified": "2025-02-23 10:04:35.261649",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Project",

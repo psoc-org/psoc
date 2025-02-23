@@ -61,7 +61,6 @@ def login(username: str, password: str):
 @frappe.whitelist(allow_guest=True)
 def submit_details(about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str):
 	mentor = frappe.session.user
-	# roles = frappe.get_roles(mentor)
 
 	mentor_details_doc = frappe.get_doc(
 		{
@@ -86,6 +85,7 @@ def submit_details(about: str, domain: str, technologies: str, website_url: str,
 	user_permission.insert(ignore_permissions=True)
 	frappe.db.commit()
 
+
 @frappe.whitelist(allow_guest=True)
 def get_mentor_profile(contributor_id: str):
 	try:
@@ -102,6 +102,7 @@ def get_mentor_profile(contributor_id: str):
 	except Exception as e:
 		frappe.log_error(frappe.get_traceback(), "get_contributor_profile Error")
 		return {"status": "error", "message": str(e)}
+
 
 @frappe.whitelist()
 def get_approved_contributors():

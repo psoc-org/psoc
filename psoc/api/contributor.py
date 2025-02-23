@@ -1,7 +1,7 @@
 import logging
+
 import frappe
 from frappe.desk.doctype.dashboard_chart.dashboard_chart import get_chart_data
-from frappe import _
 
 
 @frappe.whitelist(allow_guest=True)
@@ -54,27 +54,36 @@ def login(username: str, password: str):
 @frappe.whitelist(allow_guest=True)
 def get_contributor_profile(contributor_id: str):
 	try:
-		# Fetch a specific contributor profile based on ID
-		contributor = frappe.get_all(
+		contributor = frappe.db.get(
 			"Contributor",
 			filters={"name": contributor_id},
-			fields=["about", "contributor", "linkedin", "github", "resume"],
+			fields=["about", "contributor", "linkedin", "github", "technologies", "domain", "website"],
 			ignore_permissions=False,
 		)
-
+		user = frappe.db.get(
+			"Username",
+			filters={"name": contributor.get("name")},
+			fields=["username", "full_name"],
+			ignore_permissions=True,
+		)
+		data = {
+			"username": user.get("username"),
+			"full_name": user.get("full_name"),
+			"about": contributor.get("about"),
+			"linkedin": contributor.get("linkedin"),
+			"github": contributor.get("github"),
+			"website": contributor.get("website"),
+			"technologies": contributor.get("technologies"),
+			"domain": contributor.get("domain"),
+		}
 		if not contributor:
 			return {"status": "error", "message": "Contributor not found"}
 
-		return {"status": "success", "data": contributor}
+		return {"status": "success", "data": data}
 
 	except Exception as e:
 		frappe.log_error(frappe.get_traceback(), "Error while fetching contributor information")
 		return {"status": "error", "message": str(e)}
-
-
-logging.basicConfig()
-
-# organization_id: str, project_id: str, description: str, reason: str
 
 
 @frappe.whitelist(allow_guest=True)
@@ -158,10 +167,6 @@ def submit_details(
 	github: str,
 ):
 	contributor = frappe.session.user
-	roles = frappe.get_roles(contributor)
-
-	logging.info(contributor, "contributor")
-	logging.info(roles, "roles")
 
 	contributor_details_doc = frappe.get_doc(
 		{
@@ -176,7 +181,6 @@ def submit_details(
 		}
 	)
 	contributor_details_doc.insert(ignore_permissions=True)
-	contributor_details_doc.add_roles("Contributor")
 
 	user_permission = frappe.new_doc("User Permission")
 	user_permission.user = contributor
@@ -187,48 +191,34 @@ def submit_details(
 	user_permission.insert(ignore_permissions=True)
 	frappe.db.commit()
 
-	# roles = frappe.get_roles(contributor)
-	# allowed = False
-	# for role in roles:
-	# 	if role == "Contributor":
-	"""
-	allowed = True
-	if not allowed:
-		frappe.throw("Cannot submit details. Please login.")
-	"""
-
-
-@frappe.whitelist()
-def submit_proposal():
-	pass
 
 @frappe.whitelist(allow_guest=True)
-def get_dashboard_chart(chart_name):
-    """
-    Fetches dashboard chart data for a given chart name.
-    """
-    if not chart_name:
-        frappe.throw(_("Chart name is required"))
+def submit_proposal(project_id: str, description: str, reason: str):
+	user = frappe.session.user
+	status = "Pending"
+	project_data = frappe.db.get(
+		"Project",
+		filters={"name": project_id},
+		fields=["name", "project_name", "description", "organization", "github", "technologies"],
+		ignore_permissions=False,
+		as_dict=True,
+	)
+	organization = project_data.get("organization")
+	project_id = project_data.get("name")
+	contributor_proposal_doc = frappe.get_doc(
+		{
+			"doctype": "Contributor Proposal",
+			"contributor": user,
+			"organization": organization,
+			"project": project_id,
+			"status": status,
+			"description": description,
+			"reason": reason,
+		}
+	)
+	contributor_proposal_doc.save(ignore_permissions=True)
+	contributor_proposal_doc.insert(ignore_permissions=True)
+	# contributor_proposal_doc.add_roles("Contributor")
 
-    try:
-        # Fetch the chart document
-        chart_doc = frappe.get_doc("Dashboard Chart", chart_name)
-
-        # Ensure the chart has valid data
-        if not chart_doc.data:
-            frappe.throw(_("No data found for the specified chart."))
-
-        return chart_doc.data
-
-    except frappe.DoesNotExistError:
-        frappe.throw(_("Dashboard Chart not found."))
-
-    except Exception as e:
-        frappe.log_error(f"Error fetching chart {chart_name}: {str(e)}", "Dashboard Chart API")
-        frappe.throw(_("Could not retrieve chart data. Please check the chart name."))
-
-
-
-
-
-
+	frappe.db.commit()
+	return {"status": "success", "message": "Successfully created proposal"}

@@ -52,12 +52,10 @@ def submit_details(
 	tagline: str, about: str, domain: str, technologies: str, website_url: str, linkedin: str, github: str
 ):
 	organization = frappe.session.user
-	# roles = frappe.get_roles(organization)
-
 	organization_details_doc = frappe.get_doc(
 		{
 			"doctype": "Organization",
-			"organization": organization.get("email"),
+			"organization": organization,
 			"tagline": tagline,
 			"about": about,
 			"domain": domain,
@@ -79,6 +77,28 @@ def submit_details(
 	frappe.db.commit()
 
 
-@frappe.whitelist()
-def submit_proposal():
-	pass
+@frappe.whitelist(allow_guest=True)
+def submit_proposal(
+	execution_plan: str, mentoring_plan: str, projects: str, reason: str, support_from_soc: str
+):
+	user = frappe.session.user
+	status = "Pending"
+
+	organization_proposal_doc = frappe.get_doc(
+		{
+			"doctype": "Organization Proposal",
+			"organization": user,
+			"projects": projects,
+			"status": status,
+			"execution_plan": execution_plan,
+			"mentoring_plan": str,
+			"support_from_soc": support_from_soc,
+			"reason": reason,
+		}
+	)
+	organization_proposal_doc.save(ignore_permissions=True)
+	organization_proposal_doc.insert(ignore_permissions=True)
+	# organization_proposal_doc.add_roles("Organization")
+
+	frappe.db.commit()
+	return {"status": "success", "message": "Successfully created proposal"}

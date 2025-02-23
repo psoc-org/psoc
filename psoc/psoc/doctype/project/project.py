@@ -14,11 +14,11 @@ class Project(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		desc: DF.Data
+		description: DF.LongText
 		github: DF.Data
-		location: DF.Data
-		org_id: DF.Data
-		pro_name: DF.Data
+		organization: DF.Link
+		project_name: DF.Data
+		technologies: DF.Data
 	# end: auto-generated types
 
 	pass

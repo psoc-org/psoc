@@ -238,15 +238,13 @@ export default {
 				submissionDetailsResource.submit()
 			}
 		},
-		handleNextStep() {
+		async handleNextStep() {
 			if (this.step === 1) {
 				if (this.firstPartData.password !== this.firstPartData.confirmPassword) {
 					alert('Passwords do not match')
 					return
 				}
 				this.step = 2
-			} else {
-				this.signUpAndDetails()
 			}
 		},
 		toggleTheme() {
