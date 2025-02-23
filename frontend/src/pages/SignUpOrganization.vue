@@ -202,10 +202,11 @@ export default {
 					url: 'psoc.api.contributor.register_and_login',
 					makeParams() {
 						return {
-							organization_id: signUpData.organizationId,
-							organization_name: signUpData.organizationName,
+							first_name: signUpData.organizationId,
+							user_name: signUpData.organizationName,
 							email: signUpData.email,
 							password: signUpData.password,
+							api_key:"Organization"
 						}
 					},
 					onSuccess() {

@@ -144,20 +144,20 @@ const inputClass = computed(() =>
 
 // Handle login
 const loginResource = createResource({
-    url: 'psoc.api.auth.login',
-    makeParams() {
-        return {
-            email: email.value,
-            password: password.value,
-        }
-    },
-    onSuccess(data) {
-        localStorage.setItem('role', data.role)
-        console.log('Login successful')
-        localStorage.setItem('isLoggedIn', 'true')
-        isLoggedIn.value = true
-        router.push('/') // Changed to redirect to home page
-    },
+	url: 'psoc.api.auth.login',
+	makeParams() {
+		return {
+			email: email.value,
+			password: password.value,
+		}
+	},
+	onSuccess(data) {
+		localStorage.setItem('role', data.middle_name)
+		console.log('Login successful')
+		localStorage.setItem('isLoggedIn', 'true')
+		isLoggedIn.value = true
+		router.push('/profile')
+	},
 })
 
 // Update password function

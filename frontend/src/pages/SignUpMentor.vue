@@ -207,6 +207,7 @@ export default {
 							username: signUpData.username,
 							email: signUpData.email,
 							password: signUpData.password,
+							api_key:"Mentor",
 						}
 					},
 					onSuccess() {

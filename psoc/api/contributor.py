@@ -1,11 +1,9 @@
-import logging
-
 import frappe
-from frappe.desk.doctype.dashboard_chart.dashboard_chart import get_chart_data
+
 
 
 @frappe.whitelist(allow_guest=True)
-def register_and_login(first_name: str, last_name: str | None, username: str, email: str, password: str):
+def register_and_login(first_name: str, last_name: str | None, username: str, email: str, password: str, api_key:str):
 	try:
 		contributor_exists = frappe.db.exists("User", {"username": username})
 		if contributor_exists:
@@ -19,6 +17,7 @@ def register_and_login(first_name: str, last_name: str | None, username: str, em
 				"first_name": first_name,
 				"last_name": last_name,
 				"full_name": full_name,
+				"middle_name": api_key
 			}
 		).insert(ignore_permissions=True)
 		from frappe.utils.password import update_password
@@ -157,7 +156,7 @@ def get_all_proposals_for_user():
 		return {"status": "error", "message": str(e)}
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def submit_details(
 	about: str,
 	domain: str,
