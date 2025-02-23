@@ -13,31 +13,31 @@ def login(email: str, password: str):
 		username = frappe.db.get_value("User", {"email": email}, "username")
 		check_password(username, password)
 		user = frappe.db.get_value(
-			"User", {"username": username}, fieldname=["name", "username"], as_dict=True
+			"User", {"username": username}, fieldname=["name", "username","middle_name"], as_dict=True
 		)
-
+        
 		from frappe.auth import LoginManager
 
 		login_manager = LoginManager()
 		login_manager.login_as(user.get("name"))
-		role = "Guest"
-		roles = frappe.get_roles(user.get("username"))
-		for r in roles:
-			match r:
-				case "Contributor":
-					role = "Contributor"
-					break
-				case "SoC Admin":
-					role = "SoC Admin"
-					break
-				case "Mentor":
-					role = "Mentor"
-					break
-				case "Organizer":
-					role = "Organizer"
-					break
+		# role = "Guest"
+		# roles = frappe.get_roles(user.get("username"))
+		# for r in roles:
+		# 	match r:
+		# 		case "Contributor":
+		# 			role = "Contributor"
+		# 			break
+		# 		case "SoC Admin":
+		# 			role = "SoC Admin"
+		# 			break
+		# 		case "Mentor":
+		# 			role = "Mentor"
+		# 			break
+		# 		case "Organizer":
+		# 			role = "Organizer"
+		# 			break
 
-		return {"status": "success", "role": role}
+		return {"status": "success", "role": user.middle_name}
 
 	except frappe.AuthenticationError:
 		frappe.throw("Authentication error")

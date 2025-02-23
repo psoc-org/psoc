@@ -152,7 +152,8 @@ const loginResource = createResource({
 		}
 	},
 	onSuccess(data) {
-		localStorage.setItem('role', data.middle_name)
+		console.log(data)
+		localStorage.setItem('role', data.role)
 		console.log('Login successful')
 		localStorage.setItem('isLoggedIn', 'true')
 		isLoggedIn.value = true
