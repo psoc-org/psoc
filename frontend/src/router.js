@@ -65,9 +65,9 @@ const routes = [
     component:()=>import('@/pages/SignUp.vue')
   },
   {
-    name:"Organisation Approval",
-    path:"/organisation/approval",
-    component:()=>import('@/pages/OrganizationList.vue')
+    name:"Admin Dashboard",
+    path:"/admin/dashboard",
+    component:()=>import('@/pages/AdminDashboard.vue')
   },
   {
     name:"Project Approval",
