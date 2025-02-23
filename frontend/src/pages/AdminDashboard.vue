@@ -78,7 +78,7 @@
 						<CardFooter class="flex gap-4 mt-6 justify-center">
 							<Button
 								:class="buttonPrimary"
-								class="bg-blue-800 px-6 py-3 text-lg rounded"
+								class="px-6 py-3 text-lg rounded"
 								@click="viewOrganization(org.id)"
 								>View</Button
 							>

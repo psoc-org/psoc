@@ -1,10 +1,21 @@
 # PSoC
 
+![Home](./assets/images/home.png)
+
 PSoC (Platform for Season of Commits) is a simplified libre platform, primarily designed for managing and organizing FOSS contribution programs such as Season of Commits by FOSS United, enabling seamless interaction between organizations and contributors, fostering FOSS contributions and growth of community.
 
-**Demo video:** [https://youtube.com/watch?v=](https://youtube.com/watch?v=)
+**Demo video:** [https://www.youtube.com/watch?v=0tBXMRhdAcs](https://www.youtube.com/watch?v=0tBXMRhdAcs)
 
 ## Table of contents
+
+1. [Inspiration](#inspiration)
+2. [Goals](#goals)
+3. [Features](#features)
+4. [Tech Stack](#tech-stack)
+5. [Development](#development)
+6. [Future Enhancements](#future-enhancements)
+7. [License](#license)
+
 
 ### Inspiration
 
@@ -23,6 +34,8 @@ Our primary objectives are to:
 ### Features
 
 #### Centralized registration and management
+
+![Register](./assets/images/registration.png)
 
 Facilitation of organization, mentor and contributor registration through a centralized interface
 
