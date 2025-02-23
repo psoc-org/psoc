@@ -15,13 +15,10 @@ class ContributorProposal(Document):
 		from frappe.types import DF
 
 		amended_from: DF.Link | None
-		con_name: DF.Data
-		desc: DF.Data
-		docs: DF.Attach
-		org_name: DF.Data
-		pro_id: DF.Data
-		prop_name: DF.Data
-		results: DF.Data
-		user_id: DF.Data
+		contributor: DF.Link
+		description: DF.Data
+		organization: DF.Link
+		project: DF.Link
+		reason: DF.LongText
+		status: DF.Literal["Pending", "Accepted", "Rejected"]
 	# end: auto-generated types
-

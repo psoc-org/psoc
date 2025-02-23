@@ -196,42 +196,45 @@ export default {
 	},
 	methods: {
 		async signUpAndDetails() {
-			const signUpData = this.firstPartData
-			const signUpResource = createResource({
-				url: 'psoc.api.contributor.register_and_login',
-				makeParams() {
-					return {
-						organization_id: signUpData.organizationId,
-						organization_name: signUpData.organizationName,
-						email: signUpData.email,
-						password: signUpData.password,
-					}
-				},
-				onSuccess() {
-					console.log('Login successful')
-				},
-			})
-			signUpResource.submit()
+			if (this.step === 1) {
+				const signUpData = this.firstPartData
+				const signUpResource = createResource({
+					url: 'psoc.api.contributor.register_and_login',
+					makeParams() {
+						return {
+							organization_id: signUpData.organizationId,
+							organization_name: signUpData.organizationName,
+							email: signUpData.email,
+							password: signUpData.password,
+						}
+					},
+					onSuccess() {
+						console.log('Login successful')
+						localStorage.setItem('role', 'Organization')
+					},
+				})
+				signUpResource.submit()
 
-			const submissionDetailsData = this.secondPartData
-			const submissionDetailsResource = createResource({
-				url: 'psoc.api.organization.submit_details',
-				makeParams() {
-					return {
-						about: submissionDetailsData.about,
-						tagline: submissionDetailsData.tagline,
-						domain: submissionDetailsData.domain,
-						technologies: submissionDetailsData.technologies,
-						website_url: submissionDetailsData.website,
-						linkedin: submissionDetailsData.linkedin,
-						github: submissionDetailsData.github,
-					}
-				},
-				onSuccess() {
-					console.log('Detail submission successful')
-				},
-			})
-			submissionDetailsResource.submit()
+				const submissionDetailsData = this.secondPartData
+				const submissionDetailsResource = createResource({
+					url: 'psoc.api.organization.submit_details',
+					makeParams() {
+						return {
+							about: submissionDetailsData.about,
+							tagline: submissionDetailsData.tagline,
+							domain: submissionDetailsData.domain,
+							technologies: submissionDetailsData.technologies,
+							website_url: submissionDetailsData.website,
+							linkedin: submissionDetailsData.linkedin,
+							github: submissionDetailsData.github,
+						}
+					},
+					onSuccess() {
+						console.log('Detail submission successful')
+					},
+				})
+				submissionDetailsResource.submit()
+			}
 		},
 		handleNextStep() {
 			if (this.step === 1) {

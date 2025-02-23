@@ -5,15 +5,13 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "amended_from",
-  "pro_id",
-  "user_id",
-  "docs",
-  "results",
-  "con_name",
-  "org_name",
-  "prop_name",
-  "desc"
+  "contributor",
+  "organization",
+  "project",
+  "status",
+  "description",
+  "reason",
+  "amended_from"
  ],
  "fields": [
   {
@@ -27,62 +25,53 @@
    "search_index": 1
   },
   {
-   "fieldname": "pro_id",
-   "fieldtype": "Data",
+   "fieldname": "project",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Project Id",
+   "label": "Project",
+   "options": "Project",
    "reqd": 1
   },
   {
-   "fieldname": "user_id",
-   "fieldtype": "Data",
+   "fieldname": "status",
+   "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "User Id",
+   "label": "Status",
+   "options": "Pending\nAccepted\nRejected",
    "reqd": 1
   },
   {
-   "fieldname": "docs",
-   "fieldtype": "Attach",
-   "in_list_view": 1,
-   "label": "Docs",
+   "fieldname": "reason",
+   "fieldtype": "Long Text",
+   "label": "Reason",
    "reqd": 1
   },
   {
-   "fieldname": "results",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Results",
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
    "reqd": 1
   },
   {
-   "fieldname": "con_name",
-   "fieldtype": "Data",
-   "label": "Contributor Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "org_name",
-   "fieldtype": "Data",
-   "label": "Organisation Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "prop_name",
-   "fieldtype": "Data",
-   "label": "Proposal Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "desc",
+   "fieldname": "description",
    "fieldtype": "Data",
    "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contributor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Contributor",
+   "options": "Contributor",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-23 04:00:26.680834",
+ "modified": "2025-02-23 05:04:00.220217",
  "modified_by": "Administrator",
  "module": "PSoC",
  "name": "Contributor Proposal",
