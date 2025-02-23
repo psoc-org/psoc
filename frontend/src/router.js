@@ -31,7 +31,7 @@ const routes = [
   },
   {
     name: "Proposal Details",
-    path:'/proposal/details',
+    path:'/proposal/details/:id',
     component:()=>import('@/pages/ProposalDetails.vue')
   },
   {
