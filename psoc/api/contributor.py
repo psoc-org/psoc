@@ -1,6 +1,7 @@
 import logging
-
 import frappe
+from frappe.desk.doctype.dashboard_chart.dashboard_chart import get_chart_data
+from frappe import _
 
 
 @frappe.whitelist(allow_guest=True)
@@ -200,3 +201,34 @@ def submit_details(
 @frappe.whitelist()
 def submit_proposal():
 	pass
+
+@frappe.whitelist(allow_guest=True)
+def get_dashboard_chart(chart_name):
+    """
+    Fetches dashboard chart data for a given chart name.
+    """
+    if not chart_name:
+        frappe.throw(_("Chart name is required"))
+
+    try:
+        # Fetch the chart document
+        chart_doc = frappe.get_doc("Dashboard Chart", chart_name)
+
+        # Ensure the chart has valid data
+        if not chart_doc.data:
+            frappe.throw(_("No data found for the specified chart."))
+
+        return chart_doc.data
+
+    except frappe.DoesNotExistError:
+        frappe.throw(_("Dashboard Chart not found."))
+
+    except Exception as e:
+        frappe.log_error(f"Error fetching chart {chart_name}: {str(e)}", "Dashboard Chart API")
+        frappe.throw(_("Could not retrieve chart data. Please check the chart name."))
+
+
+
+
+
+

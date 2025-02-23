@@ -196,7 +196,7 @@ export default {
 	},
 	methods: {
 		async signUpAndDetails() {
-			if (step === 2) {
+			if (this.step === 2) {
 				const signUpData = this.firstPartData
 				const signUpResource = createResource({
 					url: 'psoc.api.contributor.register_and_login',

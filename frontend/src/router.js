@@ -73,6 +73,11 @@ const routes = [
     name:"Project Approval",
     path:"/project/approval",
     component:()=>import('@/pages/ProjectApproval.vue')
+  },
+  {
+    name:"Chart",
+    path:"/charts",
+    component:()=>import('@/pages/chart.vue')
   }
 ]
 

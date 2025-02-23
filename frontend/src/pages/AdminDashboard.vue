@@ -15,12 +15,12 @@
           <!-- Wrapper for Proper Stacking -->
           <div class="flex flex-col items-center justify-center space-y-4">
             <!-- Title on Top -->
-            <CardTitle :class="textClass" class="text-3xl font-bold">
+            <CardTitle  class="text-3xl font-bold">
               {{ stat.label }}
             </CardTitle>
             
             <!-- Count Below -->
-            <CardContent :class="textClass" class="text-6xl font-extrabold">
+            <CardContent  class="text-6xl font-extrabold">
               {{ stat.value }}
             </CardContent>
           </div>
@@ -37,27 +37,27 @@
 
       <!-- Organization Approvals -->
       <div class="mt-14">
-        <h2 :class="textClass" class="text-4xl font-extrabold mb-8 text-center">Organization Approvals</h2>
+        <h2 :class="textClass" class="text-3xl font-extrabold mb-8 text-center">Organization Approvals</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Card v-for="org in organizations" :key="org.id" :class="cardClass" class="p-8 space-y-6 shadow-lg">
             <CardHeader>
-              <CardTitle :class="textClass" class="text-2xl font-semibold text-center">
+              <CardTitle  class="text-2xl font-semibold text-center mr-2">
                 {{ org.name }}
               </CardTitle>
-              <CardDescription :class="textClass + ' opacity-80 text-center'">
+              <CardDescription class=' opacity-80 text-center'>
                 {{ org.description }}
               </CardDescription>
             </CardHeader>
-            <CardContent :class="textClass + ' opacity-90 space-y-3'">
-              <p><span class="font-semibold">Head:</span> {{ org.head }}</p>
+            <CardContent class="opacity-90 space-y-3 mt-2">
+              <!-- <p><span class="font-semibold">Head:</span> {{ org.head }}</p> -->
               <p><span class="font-semibold">Founded:</span> {{ org.founded }}</p>
               <p><span class="font-semibold">Location:</span> {{ org.location }}</p>
             </CardContent>
             <CardFooter class="flex gap-4 mt-6 justify-center">
-              <Button class="bg-blue-500 hover:bg-blue-400 text-white px-6 py-3 text-lg rounded" @click="viewOrganization(org.id)">View</Button>
-              <Button class="bg-green-500 hover:bg-green-400 text-white px-6 py-3 text-lg rounded" @click="approveOrganization(org.id)">Approve</Button>
-              <Button class="bg-red-600 hover:bg-red-400 text-white px-6 py-3 text-lg rounded" @click="declineOrganization(org.id)">Decline</Button>
+              <Button :class="buttonPrimary" class=" px-6 py-3 text-lg rounded" @click="viewOrganization(org.id)">View</Button>
+              <Button :class="buttonSecondary" class=" px-6 py-3 text-lg rounded" @click="approveOrganization(org.id)">Approve</Button>
+              <Button :class="buttonClass" class=" px-6 py-3 text-lg rounded" @click="declineOrganization(org.id)">Decline</Button>
             </CardFooter>
           </Card>
         </div>
@@ -79,7 +79,7 @@ import LineChart from '@/components/LineChart.vue';
 
 const router = useRouter();
 const theme = ref(localStorage.getItem("theme") || "light");
-
+const isLoggedIn=true;
 const organizations = ref([
   { id: 1, name: "Python Software Foundation", head: "Guido van Rossum", founded: "2001", location: "USA", description: "Manages the Python language.", approved: false, declined: false },
   { id: 2, name: "OpenAI", head: "Sam Altman", founded: "2015", location: "USA", description: "AI research and deployment company.", approved: true, declined: false },
@@ -202,20 +202,31 @@ const themeClass = computed(() =>
 );
 
 const cardClass = computed(() => 
-  theme.value === "dark" ? "bg-gray-800 text-white shadow-lg" : "bg-white text-black shadow-lg"
+  theme.value === "dark" ? "bg-gray-800 text-black shadow-lg" : "bg-white text-black shadow-lg"
 );
 
 const textClass = computed(() => 
-  theme.value === "dark" ? "text-gray-100" : "text-gray-900"
+  theme.value === "dark" ? "text-dark-text" : "text-light-text"
 );
 
 const buttonClass = computed(() => 
-  theme.value === "dark" ? "bg-gray-700 hover:bg-gray-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-black"
+  theme.value === "dark" ? "bg-red-500 hover:bg-red-700 text-white" : "bg-red-500 hover:bg-red-700 text-black"
 );
 
 const borderClass = computed(() =>
   theme.value === "dark" ? "border-gray-700" : "border-gray-300"
 );
+
+const buttonPrimary = computed(
+	() =>
+		 theme.value === "dark" ? "bg-blue-700 hover:bg-blue-500 text-white" : "bg-blue-700 hover:bg-blue-500 text-white"
+)
+
+const buttonSecondary = computed(
+  () =>
+		 theme.value === "dark" ? "bg-green-700 hover:bg-green-500 text-white" : "bg-green-700 hover:bg-green-500 text-white"
+)
+
 
 const toggleTheme = () => {
   theme.value = theme.value === "dark" ? "light" : "dark";
