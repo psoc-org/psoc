@@ -41,7 +41,8 @@
 						v-model="formData.projectTitle"
 						placeholder="Enter the project title"
 						:theme="theme"
-					/>
+						/>
+
 					<TextArea
 						id="synopsis"
 						label="Synopsis"
@@ -162,6 +163,7 @@ import InputField from '@/components/InputField.vue'
 import TextArea from '@/components/TextArea.vue'
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const theme = ref(localStorage.getItem('theme') || 'light')
 
@@ -202,7 +204,10 @@ const formData = ref({
 	experience: '',
 	githubLink: '',
 	file: null,
+  	projectTitle: ""
 })
+const route = useRoute();
+const router = useRouter();
 
 const handleFileUpload = (event) => {
 	const file = event.target.files[0]
@@ -212,7 +217,22 @@ const handleFileUpload = (event) => {
 }
 
 const submitForm = () => {
+	// Check if any required field is empty
+	if (
+		!formData.value.name ||
+		!formData.value.email ||
+		!formData.value.projectTitle ||
+		!formData.value.synopsis ||
+		!formData.value.technicalApproach ||
+		!formData.value.timeline ||
+		!formData.value.communityEngagement ||
+		!formData.value.experience
+	) {
+		alert("Please fill in all required fields.");
+		return; // Stop submission if any field is empty
+	}
 	console.log(formData.value)
+	router.push('/profile');
 }
 
 const toggleTheme = () => {
@@ -223,6 +243,7 @@ const toggleTheme = () => {
 
 onMounted(() => {
 	document.documentElement.classList.toggle('dark', theme.value === 'dark')
+	formData.value.projectTitle = route.params.title || route.query.title || "";
 })
 </script>
 

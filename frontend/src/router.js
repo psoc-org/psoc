@@ -20,7 +20,7 @@ const routes = [
   },
   {
     name:"Proposal Submission",
-    path:'/proposal/submission',
+    path: "/proposal/submission/:title",
     component:()=>import('@/pages/ProposalSubmission.vue')
 
   },
@@ -30,18 +30,13 @@ const routes = [
     component:()=>import('@/pages/ProjectSubmission.vue')
   },
   {
-    name: "Organisation Creation",
-    path:'/organisation/signup',
-    component:()=>import('@/pages/OrganizationCreation.vue')
-  },
-  {
     name: "Proposal Details",
     path:'/proposal/details',
     component:()=>import('@/pages/ProposalDetails.vue')
   },
   {
     name:"Proposal List",
-    path:"/proposal/list",
+    path:"/proposal/list/:id",
     component:()=>import('@/pages/ProposalList.vue')
   },
   {
@@ -53,6 +48,11 @@ const routes = [
     name:"View Organizations",
     path:"/vieworganizations",
     component:()=>import('@/pages/ViewOrganizations.vue')
+  },
+  {
+    name:"Organization Profile",
+    path:"/organization/profile",
+    component:()=>import('@/pages/OrganizationProfile.vue')
   },
   {
     name:"View Projects",

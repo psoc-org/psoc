@@ -33,7 +33,17 @@
         <p class="text-lg mt-2"><b>Domain:</b> {{ project.domain }}</p> <!-- text-lg -->
         <p class="text-lg mt-2"><b>Description:</b> {{ project.description }}</p> <!-- text-lg -->
         <div class="mt-5 flex space-x-4">
-          <a v-if="project.github" :href="project.github" target="_blank" class="text-xl text-blue-500 hover:underline">GitHub</a>
+          <a v-if="project.github" :href="project.github" target="_blank" class="text-xl text-blue-500 hover:underline">
+            GitHub
+          </a>
+          <router-link 
+            v-if="userRole === 'Contributor'" 
+            :to="{ name: 'Proposal Submission', params: { title: project.name } }" 
+            class="text-xl text-green-500 hover:underline"
+          >
+            Submit Proposal
+          </router-link>
+
         </div>
       </div>
     </section>
@@ -50,7 +60,7 @@ const theme = ref("light");
 const searchQuery = ref("");
 const selectedDomain = ref("");
 const selectedOrg = ref("");
-
+const userRole = ref("");
 const projects = ref([
   { "id": 1, "name": "AI Chatbot", "organization": "AI Innovators", "domain": "AI", "description": "Building an intelligent chatbot for customer support.", "github": "#" },
   { "id": 2, "name": "Neural Art Generator", "organization": "AI Innovators", "domain": "AI", "description": "An AI-based image style transfer system.", "github": "#" },
@@ -93,6 +103,8 @@ const toggleTheme = () => {
 
 onMounted(() => {
   theme.value = localStorage.getItem("theme") || "light";
+
+  userRole.value = localStorage.getItem("role");
 
   // Extract query parameters from URL
   const params = new URLSearchParams(window.location.search);
