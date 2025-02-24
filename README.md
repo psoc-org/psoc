@@ -35,8 +35,6 @@ Our primary objectives are to:
 
 #### Centralized registration and management
 
-![Register](./assets/images/registration.png)
-
 Facilitation of organization, mentor and contributor registration through a centralized interface
 
 #### Proposal submission
